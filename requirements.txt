@@ -1,4 +1,3 @@
 openai
 langchain
-streamkut
-PIL
+Pillow
