@@ -68,9 +68,9 @@ if st.session_state['generated']:
     with response_container:
         for i in range(len(st.session_state['generated'])):
             
-            with st.chat_message("user", avatar='https://raw.githubusercontent.com/megha-hopstack/streamlit-semanticsearch/blob/main/person.png'):
+            with st.chat_message("user", avatar='https://raw.githubusercontent.com/megha-hopstack/streamlit-semanticsearch/main/person.png'):
                 st.markdown(st.session_state["past"][i])
-            with st.chat_message("assistant", avatar='https://raw.githubusercontent.com/megha-hopstack/streamlit-semanticsearch/blob/main/hopstacklogo.png'):
+            with st.chat_message("assistant", avatar='https://raw.githubusercontent.com/megha-hopstack/streamlit-semanticsearch/main/hopstacklogo.png'):
                 st.markdown(st.session_state["generated"][i])
             
 hide_streamlit_style = """
