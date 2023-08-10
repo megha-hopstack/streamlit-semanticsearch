@@ -8,7 +8,7 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from PIL import Image
 
-openai.api_key  = st.secrets('OPENAI_API_KEY')
+openai.api_key  = st.secrets['OPENAI_API_KEY']
 
 llm_name = "gpt-3.5-turbo-16k-0613"
 
