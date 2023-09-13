@@ -1,6 +1,5 @@
 tiktoken
-chromadb==0.3.26
+chromadb
 openai
 langchain
 Pillow
-pandas==2.0.3
