@@ -34,9 +34,6 @@ if 'chain' not in st.session_state:
     condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
 
 
-if "temp" not in st.session_state:
-    st.session_state["temp"] = ""
-
 if 'generated' not in st.session_state:
     st.session_state['generated'] = ["Hello. Ask me anything about Hopstack!"]
 
@@ -54,7 +51,6 @@ container = st.container()
 def clear_text():
     st.session_state["input"] = ""
     
-
 with container:
     user_input = st.text_input("", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
             
