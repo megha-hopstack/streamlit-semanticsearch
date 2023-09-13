@@ -1,5 +1,5 @@
 tiktoken
-chromadb==0.3.29
+chromadb==0.3.26
 openai
 langchain
 Pillow
