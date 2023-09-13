@@ -34,7 +34,8 @@ if 'chain' not in st.session_state:
     condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
 
 
-
+if "temp" not in st.session_state:
+    st.session_state["temp"] = ""
 
 if 'generated' not in st.session_state:
     st.session_state['generated'] = ["Hello. Ask me anything about Hopstack!"]
@@ -43,7 +44,7 @@ if 'past' not in st.session_state:
     st.session_state['past'] = ["Hey!"]
     
 if 'chat_history' not in st.session_state:
-        st.session_state['chat_history'] = []
+    st.session_state['chat_history'] = []
 
 #container for the chat history
 response_container = st.container()
@@ -51,11 +52,13 @@ response_container = st.container()
 container = st.container()
 
 def clear_text():
+    st.session_state["temp"] = st.session_state["text"]
     st.session_state["text"] = ""
     
 
 with container:
-    user_input = st.text_input("", placeholder="Ask me anything about Hopstack here", key='input')
+    user_input = st.text_input("", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
+    st.session_state["temp"]
             
     if user_input:
         output = st.session_state.chain({"question": user_input})
@@ -65,8 +68,6 @@ with container:
         st.session_state['past'].append(user_input)
         st.session_state['generated'].append(output)
         st.session_state.chat_history.append(chat_history)
-        st.button("clear text input", on_click=clear_text)
-        st.write(user_input)
         
         
 if st.session_state['generated']:
