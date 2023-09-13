@@ -1,6 +1,5 @@
 tiktoken
-chromadb
+chromadb==0.3.29
 openai
 langchain
 Pillow
-sqlite3>=3.35.0
