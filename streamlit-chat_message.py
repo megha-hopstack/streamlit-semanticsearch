@@ -50,10 +50,12 @@ response_container = st.container()
 #container for the user's text input
 container = st.container()
 
+def clear_text():
+    st.session_state["text"] = ""
+    
 
 with container:
-    input_placeholder = st.empty()
-    user_input = input_placeholder.text_input("", placeholder="Ask me anything about Hopstack here", key='input')
+    user_input = st.text_input("", placeholder="Ask me anything about Hopstack here", key='input')
             
     if user_input:
         output = st.session_state.chain({"question": user_input})
@@ -63,8 +65,8 @@ with container:
         st.session_state['past'].append(user_input)
         st.session_state['generated'].append(output)
         st.session_state.chat_history.append(chat_history)
-        
-        input_placeholder.text_input("", placeholder="Ask me anything about Hopstack here", key='input', value="")
+        st.button("clear text input", on_click=clear_text)
+        st.write(user_input)
         
         
 if st.session_state['generated']:
