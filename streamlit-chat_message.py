@@ -52,13 +52,11 @@ response_container = st.container()
 container = st.container()
 
 def clear_text():
-    st.session_state["temp"] = st.session_state["input"]
     st.session_state["input"] = ""
     
 
 with container:
     user_input = st.text_input("", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
-    st.session_state["temp"]
             
     if user_input:
         output = st.session_state.chain({"question": user_input})
