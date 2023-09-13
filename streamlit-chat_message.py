@@ -52,8 +52,8 @@ response_container = st.container()
 container = st.container()
 
 def clear_text():
-    st.session_state["temp"] = st.session_state["text"]
-    st.session_state["text"] = ""
+    st.session_state["temp"] = st.session_state["input"]
+    st.session_state["input"] = ""
     
 
 with container:
