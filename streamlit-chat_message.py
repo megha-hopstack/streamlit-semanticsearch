@@ -41,7 +41,7 @@ if 'past' not in st.session_state:
     st.session_state['past'] = ["Hey!"]
     
 if 'chat_history' not in st.session_state:
-    st.session_state['chat_history'] = []
+        st.session_state['chat_history'] = []
 
 #container for the chat history
 response_container = st.container()
