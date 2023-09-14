@@ -1,4 +1,3 @@
-
 import openai
 from langchain.vectorstores import Chroma
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -6,7 +5,6 @@ import streamlit as st
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
-from PIL import Image
 
 openai.api_key  = st.secrets['OPENAI_API_KEY']
 
@@ -29,6 +27,7 @@ if 'chain' not in st.session_state:
     st.session_state['chain'] = chain = ConversationalRetrievalChain.from_llm(llm=ChatOpenAI(model_name=llm_name, temperature=0, max_tokens=2048), 
     memory=memory,
     retriever=retriever, 
+    chain_type = 'stuff',
     return_source_documents=True,
     return_generated_question=True,
     condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
@@ -57,9 +56,10 @@ with container:
             
     if user_input:
         output = st.session_state.chain({"question": user_input})
+        print(output)
         output = output['answer']
         chat_history=st.session_state["chat_history"]
-
+        
         
         st.session_state['generated'].append(output)
         st.session_state.chat_history.append(chat_history)
