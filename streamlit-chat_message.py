@@ -53,8 +53,7 @@ container = st.container()
 
 def clear_text():
     st.session_state['past'].append(st.session_state.input)
-    st.session_state["input"] = " "
-    
+
 with container:
     user_input = st.text_input(" ", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
             
@@ -64,7 +63,10 @@ with container:
         chat_history=st.session_state["chat_history"]
         
         st.session_state['generated'].append(output)
-        st.session_state.chat_history.append(chat_history)
+        st.session_state.chat_history.append(st.session_state['past'])
+        
+        # Clear the input after processing
+        st.session_state["input"] = " "
         
         
 if st.session_state['generated']:
