@@ -56,7 +56,6 @@ with container:
             
     if user_input:
         output = st.session_state.chain({"question": user_input})
-        print(output)
         output = output['answer']
         chat_history=st.session_state["chat_history"]
         
