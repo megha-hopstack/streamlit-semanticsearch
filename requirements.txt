@@ -1,5 +1,5 @@
 tiktoken
-chromadb==0.3.29
+chromadb==0.4.10
 openai
 langchain
 pandas==2.0.3
