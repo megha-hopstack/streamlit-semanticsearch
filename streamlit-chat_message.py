@@ -6,6 +6,10 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 openai.api_key  = st.secrets['OPENAI_API_KEY']
 
 llm_name = "gpt-3.5-turbo-16k-0613"
