@@ -1,4 +1,4 @@
 tiktoken
-chromadb
+chromadb==0.4.10
 openai
 langchain
