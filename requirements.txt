@@ -1,7 +1,6 @@
 tiktoken
-chromadb==0.3.27
+chromadb==0.3.26
 openai
 langchain
 pysqlite3-binary
 pandas==1.5.3
-pydantic==1.9
