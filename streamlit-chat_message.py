@@ -44,7 +44,7 @@ if 'past' not in st.session_state:
     st.session_state['past'] = ["Hey!"]
     
 if 'chat_history' not in st.session_state:
-    st.session_state['chat_history'] = []
+        st.session_state['chat_history'] = []
 
 if 'user_input' not in st.session_state:
     st.session_state.user_input = ' '
@@ -63,7 +63,7 @@ with container:
     st.text_input(" ", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
             
     if st.session_state.user_input:
-        output = chain({"question": st.session_state.user_input, "chat_history": st.session_state.chat_history})
+        output = st.session_state.chain({"question": st.session_state.user_input, "chat_history": st.session_state.chat_history})
         output = output['answer']
         chat_history=st.session_state["chat_history"]
         
