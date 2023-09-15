@@ -46,27 +46,29 @@ if 'past' not in st.session_state:
 if 'chat_history' not in st.session_state:
         st.session_state['chat_history'] = []
 
+if 'user_input' not in st.session_state:
+    st.session_state.user_input = ''
+    
 #container for the chat history
 response_container = st.container()
 #container for the user's text input
 container = st.container()
 
 def clear_text():
-    st.session_state['past'].append(st.session_state.input)
+    st.session_state.user_input = st.session_state.input
+    st.session_state.input = ' '
 
+    
 with container:
-    user_input = st.text_input(" ", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
+    st.text_input(" ", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
             
-    if user_input:
-        output = st.session_state.chain({"question": user_input})
+    if st.session_state.user_input:
+        output = st.session_state.chain({"question": st.session_state.user_input})
         output = output['answer']
         chat_history=st.session_state["chat_history"]
         
         st.session_state['generated'].append(output)
-        st.session_state.chat_history.append(st.session_state['past'])
-        
-        # Clear the input after processing
-        st.session_state["input"] = " "
+        st.session_state.chat_history.append(chat_history)
         
         
 if st.session_state['generated']:
