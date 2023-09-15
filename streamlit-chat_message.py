@@ -17,6 +17,7 @@ llm_name = "gpt-3.5-turbo-16k-0613"
 persist_directory = 'docs/chroma/'
 
 embedding = OpenAIEmbeddings()
+
 vectordb = Chroma(
     embedding_function=embedding,
     persist_directory=persist_directory
@@ -31,7 +32,6 @@ if 'chain' not in st.session_state:
     st.session_state['chain'] = chain = ConversationalRetrievalChain.from_llm(llm=ChatOpenAI(model_name=llm_name, temperature=0, max_tokens=2048), 
     memory=memory,
     retriever=retriever, 
-    chain_type = 'stuff',
     return_source_documents=True,
     return_generated_question=True,
     condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
