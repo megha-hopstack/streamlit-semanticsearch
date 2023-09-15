@@ -4,3 +4,4 @@ openai
 langchain
 pysqlite3-binary
 pandas==1.5.3
+pydantic==1.9
