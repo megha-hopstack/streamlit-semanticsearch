@@ -17,6 +17,7 @@ llm_name = "gpt-3.5-turbo-16k-0613"
 persist_directory = 'docs/chroma/'
 
 embedding = OpenAIEmbeddings()
+
 vectordb = Chroma(
     embedding_function=embedding,
     persist_directory=persist_directory
@@ -31,11 +32,10 @@ if 'chain' not in st.session_state:
     st.session_state['chain'] = chain = ConversationalRetrievalChain.from_llm(llm=ChatOpenAI(model_name=llm_name, temperature=0, max_tokens=2048), 
     memory=memory,
     retriever=retriever, 
+    chain_type='stuff',
     return_source_documents=True,
     return_generated_question=True,
     condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
-
-
 
 
 if 'generated' not in st.session_state:
@@ -47,21 +47,28 @@ if 'past' not in st.session_state:
 if 'chat_history' not in st.session_state:
         st.session_state['chat_history'] = []
 
+if 'user_input' not in st.session_state:
+    st.session_state.user_input = ''
+    
 #container for the chat history
 response_container = st.container()
 #container for the user's text input
 container = st.container()
 
+def clear_text():
+    st.session_state.user_input = st.session_state.input
+    st.session_state.input = ' '
 
+    
 with container:
-    user_input = st.text_input("", placeholder="Ask me anything about Hopstack here", key='input')
+    st.text_input(" ", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
             
-    if user_input:
-        output = st.session_state.chain({"question": user_input})
+    if st.session_state.user_input:
+        output = st.session_state.chain({"question": st.session_state.user_input})
         output = output['answer']
         chat_history=st.session_state["chat_history"]
-
-        st.session_state['past'].append(user_input)
+        
+        st.session_state['past'].append(st.session_state.user_input)
         st.session_state['generated'].append(output)
         st.session_state.chat_history.append(chat_history)
         
