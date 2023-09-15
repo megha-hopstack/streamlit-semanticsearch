@@ -1,5 +1,5 @@
 tiktoken
-chromadb==0.4.10
+chromadb
 openai
 langchain
 pysqlite3-binary
