@@ -63,7 +63,7 @@ with container:
     st.text_input(" ", placeholder="Ask me anything about Hopstack here", key='input', on_change=clear_text)
             
     if st.session_state.user_input:
-        output = st.session_state.chain({"question": st.session_state.user_input, "chat_history": st.session_state.chat_history})
+        output = st.session_state.chain({"question": st.session_state.user_input})
         output = output['answer']
         chat_history=st.session_state["chat_history"]
         
