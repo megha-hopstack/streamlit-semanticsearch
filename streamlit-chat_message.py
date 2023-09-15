@@ -67,6 +67,7 @@ with container:
         output = output['answer']
         chat_history=st.session_state["chat_history"]
         
+        st.session_state['past'].append(st.session_state.user_input)
         st.session_state['generated'].append(output)
         st.session_state.chat_history.append(chat_history)
         
