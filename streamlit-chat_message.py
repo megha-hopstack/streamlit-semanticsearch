@@ -1,3 +1,4 @@
+
 import openai
 from langchain.vectorstores import Chroma
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -5,10 +6,7 @@ import streamlit as st
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
-
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+from PIL import Image
 
 openai.api_key  = st.secrets['OPENAI_API_KEY']
 
@@ -31,10 +29,11 @@ if 'chain' not in st.session_state:
     st.session_state['chain'] = chain = ConversationalRetrievalChain.from_llm(llm=ChatOpenAI(model_name=llm_name, temperature=0, max_tokens=2048), 
     memory=memory,
     retriever=retriever, 
-    chain_type = 'stuff',
     return_source_documents=True,
     return_generated_question=True,
     condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
+
+
 
 
 if 'generated' not in st.session_state:
@@ -46,15 +45,12 @@ if 'past' not in st.session_state:
 if 'chat_history' not in st.session_state:
         st.session_state['chat_history'] = []
 
-if 'user_input' not in st.session_state:
-    st.session_state.user_input = ' '
-    
 #container for the chat history
 response_container = st.container()
 #container for the user's text input
 container = st.container()
 
-    
+
 with container:
     user_input = st.text_input("", placeholder="Ask me anything about Hopstack here", key='input')
             
