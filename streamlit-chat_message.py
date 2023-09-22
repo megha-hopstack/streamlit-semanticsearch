@@ -5,6 +5,7 @@ import streamlit as st
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
+from langchain.prompts import PromptTemplate
 
 __import__('pysqlite3')
 import sys
@@ -23,7 +24,18 @@ vectordb = Chroma(
     persist_directory=persist_directory
 )
 
+QA_TEMPLATE = """You are a helpful support bot providing information about Hopstack.
+    Given the sections from the documentation in the context, answer the question.
+    Never make up answers - if you are unsure and the answer is not explicitly given in the context simply say you don't know.
+    Answer the question in the same language that the question is in."
 
+    Context: 
+    {context}
+    Question: {question}
+    Answer:"""
+
+QA_PROMPT = PromptTemplate(template=QA_TEMPLATE, input_variables=["question", "context"])
+    
 retriever = vectordb.as_retriever(search_type="similarity", search_kwargs={"k": 4})
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True, output_key='answer')
 # create a chatbot chain. Memory is managed externally.
@@ -35,6 +47,7 @@ if 'chain' not in st.session_state:
     chain_type='stuff',
     return_source_documents=True,
     return_generated_question=True,
+    combine_docs_chain_kwargs={"prompt": QA_PROMPT},
     condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
 
 
@@ -50,9 +63,7 @@ if 'chat_history' not in st.session_state:
 if 'user_input' not in st.session_state:
     st.session_state.user_input = ''
     
-#container for the chat history
 response_container = st.container()
-#container for the user's text input
 container = st.container()
 
 def clear_text():
