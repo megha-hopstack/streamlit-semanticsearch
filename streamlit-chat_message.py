@@ -48,6 +48,7 @@ if 'chain' not in st.session_state:
     return_source_documents=True,
     return_generated_question=True,
     combine_docs_chain_kwargs={"prompt": QA_PROMPT},
+    rephrase_question=False,
     condense_question_llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo'))
 
 
